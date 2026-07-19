@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+
+  <!-- createShipment -->
+  <bpmn:process id="lo-create-shipment" name="Lo Create Shipment" isExecutable="true">
+    <bpmn:startEvent id="start-create-shipment"/>
+    <bpmn:sequenceFlow id="sf-cs-1" sourceRef="start-create-shipment" targetRef="task-create-shipment"/>
+    <bpmn:serviceTask id="task-create-shipment" name="Create Shipment">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.createShipment"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-cs-2" sourceRef="task-create-shipment" targetRef="end-create-shipment"/>
+    <bpmn:endEvent id="end-create-shipment"/>
+  </bpmn:process>
+
+  <!-- updateShipment -->
+  <bpmn:process id="lo-update-shipment" name="Lo Update Shipment" isExecutable="true">
+    <bpmn:startEvent id="start-update-shipment"/>
+    <bpmn:sequenceFlow id="sf-us-1" sourceRef="start-update-shipment" targetRef="task-update-shipment"/>
+    <bpmn:serviceTask id="task-update-shipment" name="Update Shipment">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.updateShipment"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-us-2" sourceRef="task-update-shipment" targetRef="end-update-shipment"/>
+    <bpmn:endEvent id="end-update-shipment"/>
+  </bpmn:process>
+
+  <!-- listShipments -->
+  <bpmn:process id="lo-list-shipments" name="Lo List Shipments" isExecutable="true">
+    <bpmn:startEvent id="start-list-shipments"/>
+    <bpmn:sequenceFlow id="sf-ls-1" sourceRef="start-list-shipments" targetRef="task-list-shipments"/>
+    <bpmn:serviceTask id="task-list-shipments" name="List Shipments">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.listShipments"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-ls-2" sourceRef="task-list-shipments" targetRef="end-list-shipments"/>
+    <bpmn:endEvent id="end-list-shipments"/>
+  </bpmn:process>
+
+  <!-- getShipment -->
+  <bpmn:process id="lo-get-shipment" name="Lo Get Shipment" isExecutable="true">
+    <bpmn:startEvent id="start-get-shipment"/>
+    <bpmn:sequenceFlow id="sf-gs-1" sourceRef="start-get-shipment" targetRef="task-get-shipment"/>
+    <bpmn:serviceTask id="task-get-shipment" name="Get Shipment">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.getShipment"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-gs-2" sourceRef="task-get-shipment" targetRef="end-get-shipment"/>
+    <bpmn:endEvent id="end-get-shipment"/>
+  </bpmn:process>
+
+  <!-- createRoute -->
+  <bpmn:process id="lo-create-route" name="Lo Create Route" isExecutable="true">
+    <bpmn:startEvent id="start-create-route"/>
+    <bpmn:sequenceFlow id="sf-cr-1" sourceRef="start-create-route" targetRef="task-create-route"/>
+    <bpmn:serviceTask id="task-create-route" name="Create Route">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.createRoute"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-cr-2" sourceRef="task-create-route" targetRef="end-create-route"/>
+    <bpmn:endEvent id="end-create-route"/>
+  </bpmn:process>
+
+  <!-- updateRoute -->
+  <bpmn:process id="lo-update-route" name="Lo Update Route" isExecutable="true">
+    <bpmn:startEvent id="start-update-route"/>
+    <bpmn:sequenceFlow id="sf-ur-1" sourceRef="start-update-route" targetRef="task-update-route"/>
+    <bpmn:serviceTask id="task-update-route" name="Update Route">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.updateRoute"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-ur-2" sourceRef="task-update-route" targetRef="end-update-route"/>
+    <bpmn:endEvent id="end-update-route"/>
+  </bpmn:process>
+
+  <!-- listRoutes -->
+  <bpmn:process id="lo-list-routes" name="Lo List Routes" isExecutable="true">
+    <bpmn:startEvent id="start-list-routes"/>
+    <bpmn:sequenceFlow id="sf-lr-1" sourceRef="start-list-routes" targetRef="task-list-routes"/>
+    <bpmn:serviceTask id="task-list-routes" name="List Routes">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.listRoutes"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-lr-2" sourceRef="task-list-routes" targetRef="end-list-routes"/>
+    <bpmn:endEvent id="end-list-routes"/>
+  </bpmn:process>
+
+  <!-- getRoute -->
+  <bpmn:process id="lo-get-route" name="Lo Get Route" isExecutable="true">
+    <bpmn:startEvent id="start-get-route"/>
+    <bpmn:sequenceFlow id="sf-gr-1" sourceRef="start-get-route" targetRef="task-get-route"/>
+    <bpmn:serviceTask id="task-get-route" name="Get Route">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="com.etzhayyim.apps.lo.getRoute"/>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="sf-gr-2" sourceRef="task-get-route" targetRef="end-get-route"/>
+    <bpmn:endEvent id="end-get-route"/>
+  </bpmn:process>
+
+</bpmn:definitions>

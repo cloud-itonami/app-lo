@@ -1,0 +1,43 @@
+{
+  "name": "kotodama-dbdw2pcn",
+  "main": "svelte/.svelte-kit/cloudflare/_worker.js",
+  "compatibility_date": "2025-03-17",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "nodejs_als"
+  ],
+  "vars": {
+    "APP_CAPABILITIES": "[\"createShipment\",\"updateShipment\",\"listShipments\",\"getShipment\",\"createRoute\",\"updateRoute\",\"listRoutes\",\"getRoute\"]",
+    "APP_DESCRIPTION": "lo — Logistics Operations Platform. Shipment and route management with BPMN-driven workflows.",
+    "APP_DISPLAY_NAME": "Logistics Operations",
+    "APP_FRAMEWORK": "sveltekit-edge-bff",
+    "APP_NANOID": "dbdw2pcn",
+    "APP_PERFORMER_TYPE": "service",
+    "APP_UI_TYPE": "yoro",
+    "AGENTGATEWAY_MCP_ROUTER_URL": "https://mcp.etzhayyim.com/xrpc/com.etzhayyim.mcp.message"
+  },
+  "rules": [
+    {
+      "type": "CompiledWasm",
+      "globs": [
+        "**/*.wasm"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "dbdw2pcn.etzhayyim.com/*",
+      "zone_name": "etzhayyim.com"
+    },
+    {
+      "pattern": "lo.etzhayyim.com/*",
+      "zone_name": "etzhayyim.com"
+    }
+  ],
+  "assets": {
+    "directory": "./svelte/.svelte-kit/cloudflare/client",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}
