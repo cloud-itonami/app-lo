@@ -1,1 +1,6 @@
-{:schema "etzhayyim.repository/v1" :name "com-etzhayyim-app-lo" :kind :app :canonical-metadata :edn}
+{:schema "etzhayyim.repository/v1"
+ :name "app-lo"
+ :kind :app
+ :canonical-metadata :edn
+ :boundary {:role :logistics-operations-application
+            :domain-library "kotoba-lang/logistics"}}
