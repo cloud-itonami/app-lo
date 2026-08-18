@@ -1,29 +1,22 @@
 {
   "name": "kotodama-dbdw2pcn",
-  "main": "svelte/.svelte-kit/cloudflare/_worker.js",
+  // Compiled from src/lo/worker.cljs by shadow-cljs (:target :esm).
+  // Before the cljs migration this pointed at svelte/.svelte-kit/cloudflare/_worker.js
+  // -- a build output that is not in the tree and that nothing in the tree builds --
+  // while src/app.ts, the file that read like the application, was referenced by no
+  // config at all. See docs/adr/0001.
+  "main": "../../dist/worker.js",
   "compatibility_date": "2025-03-17",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "nodejs_als"
-  ],
   "vars": {
     "APP_CAPABILITIES": "[\"createShipment\",\"updateShipment\",\"listShipments\",\"getShipment\",\"createRoute\",\"updateRoute\",\"listRoutes\",\"getRoute\"]",
     "APP_DESCRIPTION": "lo — Logistics Operations Platform. Shipment and route management with BPMN-driven workflows.",
     "APP_DISPLAY_NAME": "Logistics Operations",
-    "APP_FRAMEWORK": "sveltekit-edge-bff",
+    "APP_FRAMEWORK": "cljs-esm-worker",
     "APP_NANOID": "dbdw2pcn",
     "APP_PERFORMER_TYPE": "service",
     "APP_UI_TYPE": "yoro",
     "AGENTGATEWAY_MCP_ROUTER_URL": "https://mcp.etzhayyim.com/xrpc/com.etzhayyim.mcp.message"
   },
-  "rules": [
-    {
-      "type": "CompiledWasm",
-      "globs": [
-        "**/*.wasm"
-      ]
-    }
-  ],
   "routes": [
     {
       "pattern": "dbdw2pcn.etzhayyim.com/*",
@@ -33,11 +26,5 @@
       "pattern": "lo.etzhayyim.com/*",
       "zone_name": "etzhayyim.com"
     }
-  ],
-  "assets": {
-    "directory": "./svelte/.svelte-kit/cloudflare/client",
-    "binding": "ASSETS",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
-  }
+  ]
 }
