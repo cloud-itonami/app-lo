@@ -1,0 +1,27 @@
+;; app-lo — the lo (Logistics Operations) appview.
+;;
+;; The Worker is ClojureScript, per the repo-wide runtime order in the
+;; superproject CLAUDE.md (kotoba wasm > clojurewasm > ClojureScript > nbb).
+;; Keeping the entry in cljs rather than .kotoba is ADR-2606290000's standing
+;; call: kotoba's ingress capability is :native-aot/:wasm-aot pending. The
+;; decision-shaped parts live in .cljc so they are testable without a browser,
+;; and are the first thing that moves to .kotoba when ingress qualifies.
+;;
+;; The design system is pinned to the tip of kotoba-lang/jp-go-digital-design-system
+;; as measured 2026-08-18 (2e2d191, 2026-08-17). The shared west checkout on this
+;; workstation was five days behind it, so the tests and the page render in
+;; docs/operator-quickstart.md were run against an extraction of THIS sha rather
+;; than against that checkout -- otherwise the source under test and the source in
+;; the bundle would be two different libraries.
+{:paths ["src"]
+ :deps {io.github.kotoba-lang/jp-go-digital-design-system
+        {:git/url "https://github.com/kotoba-lang/jp-go-digital-design-system"
+         :git/sha "2e2d191e9e1731ce6865c79dab163a5d74249053"}}
+ :aliases
+ {:cljs {:extra-deps {org.clojure/clojurescript {:mvn/version "1.11.132"}
+                      thheller/shadow-cljs {:mvn/version "2.28.20"}}}
+  :test {:extra-paths ["test"]
+         :extra-deps {io.github.cognitect-labs/test-runner
+                      {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+         :main-opts ["-m" "cognitect.test-runner"]
+         :exec-fn cognitect.test-runner.api/test}}}
