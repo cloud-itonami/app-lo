@@ -71,22 +71,19 @@
   上流が ok でなければ**そのステータスで**素通し、payload に `error` があれば
   502 —— 判定の順序も SvelteKit 版のまま。"
   [req env nsid]
-  (let [url (route/mcp-router-url (env->map env))
-        headers (js/Headers. (.-headers req))]
-    (.delete headers "host")
-    (.set headers "content-type" "application/json")
-    ;; 移行で変えた唯一の wire 値。SvelteKit 版は "sveltekit-edge-bff" を
-    ;; 名乗っていたが、名乗りは事実なので嘘にしない（APP_FRAMEWORK も同時に
-    ;; 変えてある）。
-    (.set headers "x-etzhayyim-bff" "cljs-worker")
-    (.set headers "x-etzhayyim-xrpc-method" nsid)
+  (let [url (route/mcp-router-url (env->map env))]
     (-> (.json req)
         (.catch (fn [_] #js {}))
         (.then
          (fn [input]
            (js/fetch url
                      #js {:method "POST"
-                          :headers headers
+                          ;; 受け取った header を渡す。`content-length` も渡していたので
+                          ;; 上流への fetch が失敗し 502 になっていた（route/drop-headers）。
+                          :headers (clj->js (route/relay-headers
+                                             (map (fn [pair] [(aget pair 0) (aget pair 1)])
+                                                  (es6-iterator-seq (.entries (.-headers req))))
+                                             nsid))
                           :body (js/JSON.stringify
                                  #js {:jsonrpc "2.0"
                                       :id (.randomUUID js/crypto)
