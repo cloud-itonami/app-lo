@@ -73,3 +73,24 @@
       (testing "移行前のページが出していた嘘の文言は無い"
         (is (not (str/includes? html "No public route is declared")))
         (is (not (str/includes? html "No public vars are declared")))))))
+
+(deftest relay-headers-forwards-what-it-received
+  (testing "移行前から authorization は届いていた。落ちていたのは長さの方"
+    (let [h (route/relay-headers [["Host" "x.example"]
+                                  ["Authorization" "Bearer t"]
+                                  ["Content-Length" "9"]
+                                  ["Content-Encoding" "gzip"]
+                                  ["X-Trace" "abc"]]
+                                 "com.a.b")]
+      (is (= "Bearer t" (get h "authorization"))
+          "authorization が落ちている —— preflight はこれを許可すると言っている")
+      (is (= "abc" (get h "x-trace"))
+          "呼び手が付けた header が落ちている")
+      (is (nil? (get h "host")) "host は宛先が変わるので渡さない")
+      (is (nil? (get h "content-length"))
+          "呼び手の長さを載せると上流への fetch が失敗し、502 になる（実測）")
+      (is (nil? (get h "content-encoding"))
+          "body を詰め直すので元の encoding も嘘になる")
+      (is (= "application/json" (get h "content-type")))
+      (is (= "com.a.b" (get h "x-etzhayyim-xrpc-method")))
+      (is (= "cljs-worker" (get h "x-etzhayyim-bff"))))))

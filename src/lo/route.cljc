@@ -111,6 +111,42 @@
               (map (fn [n] (if (str/includes? n ".") n (str nsid-prefix n)))))
         names))
 
+(def ^:private drop-headers
+  "上流へ渡さない header。
+
+  `host` —— 移行前の SvelteKit route も削っていた（宛先が変わるので嘘になる）。
+  移行はここまでは正しく写していた。
+
+  `content-length` / `content-encoding` —— **これが抜けていた。** body は
+  JSON-RPC の封筒に詰め直されるので、呼び手が付けた長さもエンコーディングも
+  もう本文を説明していない。それを載せたまま上流へ投げると fetch 自体が失敗し、
+  Worker は 502 `MCP router unreachable` を返す —— router には 1 度も届かない。
+  実測 2026-08-19、ビルド済み bundle に `content-length` 付きの POST を通して
+  確認した（付けなければ同じ bundle が 200 を返す）。POST に `content-length`
+  を付けないクライアントは実際にはほぼ無いので、これは稀な経路ではない。
+
+  **それ以外は全部渡す。** `authorization` はこの repo では最初から届いていた。"
+  #{"host" "content-length" "content-encoding"})
+
+(defn relay-headers
+  "受け取った header を、上流へ渡す形にする。`in` は [[k v] …] の列。
+
+  ここが `.cljc` にあるのは、これがビルドもブラウザも無しに固定できる**判断**
+  だからである。`js/Headers` を worker 側で組み立てていたので、何が渡って何が
+  落ちるかを述べたテストが書けず、上の欠陥は誰にも気づかれなかった。
+
+  `x-etzhayyim-bff` の値だけは移行で変えてある（SvelteKit 版は
+  `sveltekit-edge-bff` を名乗っていた）。名乗りは事実なので、SvelteKit で
+  なくなった後もそう名乗り続けるのは嘘になる（APP_FRAMEWORK も同時に変えた）。
+  この註は worker 側の組み立てに付いていたもので、値と一緒にここへ移した。"
+  [in nsid]
+  (into {"content-type" "application/json"
+         "x-etzhayyim-bff" "cljs-worker"
+         "x-etzhayyim-xrpc-method" nsid}
+        (comp (remove (fn [[k _]] (contains? drop-headers (str/lower-case k))))
+              (map (fn [[k v]] [(str/lower-case k) v])))
+        in))
+
 (defn unwrap-mcp
   "MCP router の応答から、呼び手に返す値を取り出す。
 
