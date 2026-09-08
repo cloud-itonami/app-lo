@@ -10,7 +10,7 @@
   capability qualifies (`:native-aot`/`:wasm-aot` are pending today —
   ADR-2606290000): a route table is a decision over scalars and strings,
   which is exactly the shape that survives that move."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def nsid-prefix
   "lo の XRPC 名前空間。3 箇所が同じ値を宣言しているのを 1 箇所に集めたもの:
@@ -63,7 +63,7 @@
   `:page` / `:health` / `:xrpc` / `:cors-preflight` / `:not-found` /
   `:method-not-allowed` / `:bad-request` のいずれか。"
   [method path]
-  (let [m (keyword (str/lower-case (or method "get")))
+  (let [m (keyword (str/lower (or method "get")))
         p (or path "")]
     (cond
       (and (= m :options) (or (= p "/xrpc") (str/starts-with? p "/xrpc/")))
@@ -143,8 +143,8 @@
   (into {"content-type" "application/json"
          "x-etzhayyim-bff" "cljs-worker"
          "x-etzhayyim-xrpc-method" nsid}
-        (comp (remove (fn [[k _]] (contains? drop-headers (str/lower-case k))))
-              (map (fn [[k v]] [(str/lower-case k) v])))
+        (comp (remove (fn [[k _]] (contains? drop-headers (str/lower k))))
+              (map (fn [[k v]] [(str/lower k) v])))
         in))
 
 (defn unwrap-mcp

@@ -1,6 +1,6 @@
 (ns lo.route-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [lo.route :as route]
             [lo.view :as view]))
 
