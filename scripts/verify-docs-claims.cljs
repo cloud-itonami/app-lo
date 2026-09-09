@@ -22,7 +22,7 @@
 (def APP "appview/lo-mcp-component")
 
 (def claims
-  {:tracked-files 19
+  {:tracked-files 20
    :inherited-bytes 8218           ; the 6 inherited files still carried unchanged
    :production-ts-files 0
    :production-svelte-files 0
