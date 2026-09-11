@@ -1,4 +1,4 @@
-#!/usr/bin/env nbb
+#!/usr/bin/env kbb
 ;; verify-docs-claims — re-derive every number README.md and docs/operator-quickstart.md
 ;; state, from the tree itself, and fail when the tree and the prose disagree.
 ;;
@@ -10,7 +10,7 @@
 ;; claims are written so it cannot quietly come back: the TypeScript and the Svelte
 ;; are asserted ABSENT BY NAME, not merely absent from a byte total.
 ;;
-;; Usage:  nbb scripts/verify-docs-claims.cljk [<dir>]     (<dir> FIRST, default ".")
+;; Usage:  kbb --backend sci scripts/verify-docs-claims.cljk [<dir>]     (<dir> FIRST, default ".")
 ;; Exit:   0 every claim holds · 1 a claim is false · 2 could not answer
 
 (require '["node:fs" :as fs]

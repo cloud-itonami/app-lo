@@ -137,7 +137,7 @@ workstation の共有 west checkout はそれより 5 日古い commit（0a02180
 - scripts/verify-docs-claims.cljk: 18 claim すべて PASS、exit 0
 - **bundle をビルドし、実際に叩いた。** resource guard の build lock を別 repo が
   30 分保持していたので順番待ちしたうえで（迂回していない）、
-  shadow-cljs release worker が 55 files / 12 compiled / 0 warnings / 110.63s で
+  amu compile --target wasm32-browser worker が 55 files / 12 compiled / 0 warnings / 110.63s で
   通り、dist/worker.js（254,347 バイト）を出した。scripts/smoke-worker.cljk が
   それを import して 30 項目を確認: default export が fetch を持つ / GET / が
   200 の HTML で route 表の全 path と APP_CAPABILITIES の 8 メソッドを完全修飾で

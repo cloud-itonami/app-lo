@@ -163,7 +163,7 @@ deploy 先も中継先も、いま存在しない（`etzhayyim.com` の apex だ
 ## 検証
 
 ```bash
-nbb scripts/verify-docs-claims.cljk .          # <dir> は先頭に置く
+kbb --backend sci scripts/verify-docs-claims.cljk .          # <dir> は先頭に置く
 ```
 
 exit 0 = 全一致 / 1 = 食い違い / **2 = 判定できなかった**（0 と区別する）。
