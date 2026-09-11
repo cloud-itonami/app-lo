@@ -48,7 +48,7 @@
 
   形を決めるのは `route/capability-nsids`（純 `.cljc`、テスト対象）。ここは
   decode だけを持つ。この decode 自身は build した bundle に対して
-  `scripts/smoke-worker.cljs` が **wrangler.jsonc の実際の値**を渡して確かめる
+  `scripts/smoke-worker.cljk` が **wrangler.jsonc の実際の値**を渡して確かめる
   ので、単体テストの代わりに end-to-end で押さえてある。"
   [s]
   (if (string? s)

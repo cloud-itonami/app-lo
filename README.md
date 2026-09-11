@@ -6,14 +6,14 @@ pod 側 LangServer）にあり、ここには無い —— 薄い edge であっ
 
 `etzhayyim/root` の `60-apps/etzhayyim-project-lo` からの抽出物で、
 **2026-08-18 に TypeScript/Svelte から ClojureScript へ移行した**（ADR-0001）。
-数字はすべて `scripts/verify-docs-claims.cljs` が tree から再計算して検査する。
+数字はすべて `scripts/verify-docs-claims.cljk` が tree から再計算して検査する。
 
 ## deploy されるものは、いま読んでいるソースである
 
 ```
-src/lo/route.cljc    判断（どの handler が答えるか）  ← 純 .cljc、テスト対象
-src/lo/view.cljc     ページ（jp-go-dds の hiccup）    ← 純 .cljc、テスト対象
-src/lo/worker.cljs   Request/Response に触る唯一の層
+src/lo/route.cljk    判断（どの handler が答えるか）  ← 純 .cljc、テスト対象
+src/lo/view.cljk     ページ（jp-go-dds の hiccup）    ← 純 .cljc、テスト対象
+src/lo/worker.cljk   Request/Response に触る唯一の層
         ↓ shadow-cljs :target :esm
 dist/worker.js       ← wrangler.jsonc の "main" が指すもの
 ```
@@ -28,7 +28,7 @@ dist/worker.js       ← wrangler.jsonc の "main" が指すもの
 入っていなかった。
 
 いまは `main` が指す bundle が上のソースからコンパイルされたものなので、その形は
-構造的に起こり得ない。`scripts/verify-docs-claims.cljs` が **shadow の出力先と
+構造的に起こり得ない。`scripts/verify-docs-claims.cljk` が **shadow の出力先と
 wrangler の `main` と export の ns 名の 3 つが噛み合っていること**を検査し、
 噛み合わなくなれば落ちる。
 
@@ -61,7 +61,7 @@ route は `[...path]`（rest parameter）だったので `/xrpc/a/b` は nsid `"
 | 面 | ファイル |
 |---|---|
 | 判断・描画・edge | `src/lo/{route.cljc, view.cljc, worker.cljs}` |
-| テスト | `test/lo/route_test.cljc`（6 tests / 32 assertions） |
+| テスト | `test/lo/route_test.cljk`（6 tests / 32 assertions） |
 | 検査スクリプト（nbb） | `scripts/{smoke-worker.cljs, verify-docs-claims.cljs}` |
 | ビルド | `deps.edn` / `shadow-cljs.edn` / `.gitignore` |
 | Worker 設定 | `appview/lo-mcp-component/wrangler.jsonc` |
@@ -163,7 +163,7 @@ deploy 先も中継先も、いま存在しない（`etzhayyim.com` の apex だ
 ## 検証
 
 ```bash
-nbb scripts/verify-docs-claims.cljs .          # <dir> は先頭に置く
+nbb scripts/verify-docs-claims.cljk .          # <dir> は先頭に置く
 ```
 
 exit 0 = 全一致 / 1 = 食い違い / **2 = 判定できなかった**（0 と区別する）。

@@ -10,7 +10,7 @@
 ;; claims are written so it cannot quietly come back: the TypeScript and the Svelte
 ;; are asserted ABSENT BY NAME, not merely absent from a byte total.
 ;;
-;; Usage:  nbb scripts/verify-docs-claims.cljs [<dir>]     (<dir> FIRST, default ".")
+;; Usage:  nbb scripts/verify-docs-claims.cljk [<dir>]     (<dir> FIRST, default ".")
 ;; Exit:   0 every claim holds · 1 a claim is false · 2 could not answer
 
 (require '["node:fs" :as fs]
@@ -146,8 +146,8 @@
     ;; 8 capabilities. Asserted structurally (the view takes the data, the worker
     ;; passes the real values) and NOT by forbidding a substring: a check that a
     ;; docstring explaining the old defect can trip is a check about prose.
-    (let [v (slurp* "src/lo/view.cljc")
-          w (slurp* "src/lo/worker.cljs")]
+    (let [v (slurp* "src/lo/view.cljk")
+          w (slurp* "src/lo/worker.cljk")]
       (if (or (nil? v) (nil? w))
         (undet! "view.cljc or worker.cljs unreadable")
         (check! :page-renders-the-data true
