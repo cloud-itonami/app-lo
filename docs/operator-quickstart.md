@@ -19,7 +19,7 @@ Cloudflare のアカウントは要らない（deploy だけが要る。§5）�
 git clone git@github.com:cloud-itonami/app-lo.git
 cd app-lo
 REPO=$PWD
-npx --yes nbb scripts/verify-docs-claims.cljk .
+npx --yes kbb --backend sci scripts/verify-docs-claims.cljk .
 ```
 
 末尾が `OK` なら README の数値・存在・不在は tree と一致している。
@@ -53,7 +53,7 @@ cat > /tmp/lo-run.cljs <<'EOF'
 (require '[cljs.test :refer [run-tests]] 'lo.route-test)
 (run-tests 'lo.route-test)
 EOF
-npx --yes nbb --classpath "$CP" /tmp/lo-run.cljs
+npx --yes kbb --backend sci --classpath "$CP" /tmp/lo-run.cljs
 ```
 
 実際の出力:
@@ -90,9 +90,9 @@ cat > /tmp/lo-render.cljs <<'EOF'
                   :actor route/actor-did}))
   (println "wrote" (.-size (.statSync fs "/tmp/lo-page.html")) "bytes"))
 EOF
-npx --yes nbb --classpath "$CP" /tmp/lo-render.cljs
+npx --yes kbb --backend sci --classpath "$CP" /tmp/lo-render.cljs
 
-cd $K/design-quality && npx --yes nbb -m design-quality.cli score /tmp/lo-page.html --min 95
+cd $K/design-quality && npx --yes kbb --backend sci -m design-quality.cli score /tmp/lo-page.html --min 95
 ```
 
 実際の出力（末尾）:
@@ -119,7 +119,7 @@ resource governor）。直接叩かず、必ず guard 経由で:
 ```bash
 cd "$REPO"
 node ~/github/com-junkawasaki/scripts/resource-guard.mjs run build -- \
-  npx --yes shadow-cljs release worker
+  npx --yes amu compile --target wasm32-browser worker
 ls -la dist/worker.js
 ```
 
@@ -172,7 +172,7 @@ shadow-cljs - starting via "clojure"
 `APP_CAPABILITIES` の JSON decode** は、ビルドを通って初めて存在する。
 
 ```bash
-cd "$REPO" && npx --yes nbb scripts/smoke-worker.cljk dist/worker.js
+cd "$REPO" && npx --yes kbb --backend sci scripts/smoke-worker.cljk dist/worker.js
 ```
 
 ```
