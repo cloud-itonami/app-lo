@@ -1,6 +1,6 @@
 {
   "name": "kotodama-dbdw2pcn",
-  // Compiled from src/lo/worker.cljs by shadow-cljs (:target :esm).
+  // Compiled from src/lo/worker.cljk by shadow-cljs (:target :esm).
   // Before the cljs migration this pointed at svelte/.svelte-kit/cloudflare/_worker.js
   // -- a build output that is not in the tree and that nothing in the tree builds --
   // while src/app.ts, the file that read like the application, was referenced by no

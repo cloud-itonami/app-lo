@@ -19,7 +19,7 @@ Cloudflare のアカウントは要らない（deploy だけが要る。§5）�
 git clone git@github.com:cloud-itonami/app-lo.git
 cd app-lo
 REPO=$PWD
-npx --yes nbb scripts/verify-docs-claims.cljs .
+npx --yes nbb scripts/verify-docs-claims.cljk .
 ```
 
 末尾が `OK` なら README の数値・存在・不在は tree と一致している。
@@ -144,12 +144,12 @@ shadow-cljs - starting via "clojure"
 し、最初のリクエストで `Cannot read properties of undefined` を投げる bundle を
 書いていた ——「ビルドが通った」は検査ではなかった（**落ちようがなかった**）。
 
-この repo で実際に落として確かめた。`src/lo/worker.cljs:148` の
+この repo で実際に落として確かめた。`src/lo/worker.cljk:148` の
 `route/dispatch` を、存在しない `route/dispatch-nonexistent` に改名して再ビルドする:
 
 ```
 ------ ERROR -------------------------------------------------------------------
- File: src/lo/worker.cljs:148:44
+ File: src/lo/worker.cljk:148:44
 ```
 
 | | exit | `dist/worker.js` sha256 | bytes |
@@ -172,7 +172,7 @@ shadow-cljs - starting via "clojure"
 `APP_CAPABILITIES` の JSON decode** は、ビルドを通って初めて存在する。
 
 ```bash
-cd "$REPO" && npx --yes nbb scripts/smoke-worker.cljs dist/worker.js
+cd "$REPO" && npx --yes nbb scripts/smoke-worker.cljk dist/worker.js
 ```
 
 ```

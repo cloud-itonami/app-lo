@@ -43,9 +43,9 @@ kotoba wasm > clojurewasm > ClojureScript > nbb で、TypeScript はそこに無
 
 **appview を ClojureScript に移し、TypeScript と Svelte を撤去する。**
 
-    src/lo/route.cljc    判断（どの handler が答えるか）
-    src/lo/view.cljc     ページ（jp-go-dds の hiccup）
-    src/lo/worker.cljs   Request/Response に触る唯一の層
+    src/lo/route.cljk    判断（どの handler が答えるか）
+    src/lo/view.cljk     ページ（jp-go-dds の hiccup）
+    src/lo/worker.cljk   Request/Response に触る唯一の層
             ↓ shadow-cljs :target :esm
     dist/worker.js       wrangler.jsonc の main が指すもの
 
@@ -134,11 +134,11 @@ workstation の共有 west checkout はそれより 5 日古い commit（0a02180
 
 - lo.route-test: 6 tests / 32 assertions、0 failures（nbb、ビルド不要）
 - ページ描画 → design-quality score 100.00、gate PASS
-- scripts/verify-docs-claims.cljs: 18 claim すべて PASS、exit 0
+- scripts/verify-docs-claims.cljk: 18 claim すべて PASS、exit 0
 - **bundle をビルドし、実際に叩いた。** resource guard の build lock を別 repo が
   30 分保持していたので順番待ちしたうえで（迂回していない）、
   shadow-cljs release worker が 55 files / 12 compiled / 0 warnings / 110.63s で
-  通り、dist/worker.js（254,347 バイト）を出した。scripts/smoke-worker.cljs が
+  通り、dist/worker.js（254,347 バイト）を出した。scripts/smoke-worker.cljk が
   それを import して 30 項目を確認: default export が fetch を持つ / GET / が
   200 の HTML で route 表の全 path と APP_CAPABILITIES の 8 メソッドを完全修飾で
   載せている / env のキーは出て値は出ない / DADS の CSS が bundle に焼かれている /
