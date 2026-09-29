@@ -35,7 +35,7 @@
    はすべて NXDOMAIN（2026-08-18 実測。`etzhayyim.com` の apex だけが解決する）。
 
 このうち (1)(2) は言語の選択の問題ではないが、**この workspace の正本言語は
-cljs と kotoba である。** superproject CLAUDE.md の runtime 順序は
+cljs と kotoba である。** superproject AGENTS.md の runtime 順序は
 kotoba wasm > clojurewasm > ClojureScript > nbb で、TypeScript はそこに無い。
 2 つの TypeScript のどちらを正本に選んでも、正本には着地しない。
 
